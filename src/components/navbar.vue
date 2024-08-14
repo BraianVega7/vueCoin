@@ -18,7 +18,7 @@
           </li>
         </ul>
         <div v-if="isLoggedIn" class="user-info">
-          <p>Bienvenido/a! {{ username }}</p>
+          <p>Bienvenido/a! <span class="username-bienvenida">{{ username }}</span></p>
           <button @click="toLogOut">Desconectar</button>
         </div>
       </div>
@@ -62,5 +62,8 @@ export default {
   border: none;
   color: white;
   cursor: pointer;
+}
+.username-bienvenida {
+  color:rgb(70, 135, 132);
 }
 </style>

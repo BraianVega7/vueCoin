@@ -1,14 +1,48 @@
 <template>
-  <div>
-    <h3>Compra</h3>
-    <h3>Venta</h3>
-    <h3>Historial de movimientos</h3>
-    <h3>Lectura, edición y borrado de las compras/ventas</h3>
-    <h3>Pantalla análisis del estado actual</h3>
-    <h3>Pantalla análisis de inversiones</h3>
-
+   <div class="page-container">
+    <div class="menu-container">
+      <router-link class="menu-item" to="/Purchase">Comprar Crypto</router-link>
+      <div class="menu-item">Venta</div>
+      <div class="menu-item">Historial de movimientos</div>
+      <div class="menu-item">Lectura, edición y borrado de las compras/ventas</div>
+      <div class="menu-item">Pantalla análisis del estado actual</div>
+      <div class="menu-item">Pantalla análisis de inversiones</div>
+    </div>
   </div>
 </template>
 
 <script>
+
 </script>
+
+<style scoped>
+.page-container {
+  background-color: #333; 
+  height: 100vh; 
+}
+
+.menu-container {
+  padding: 20px; 
+  border-radius: 5px; 
+  width: 300px; 
+  margin: 0 auto; 
+  color: white; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.menu-item {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+  background-color: #555;
+}
+
+.router-link-active {
+  font-weight: bold;
+}
+</style>

@@ -1,12 +1,11 @@
 <template>
   <div class="login-container">
-    <form @submit.prevent="login" class="login-form">
-      <h3>Inicia Sesion</h3>
-      <input type="text" placeholder="Inicia Sesion" v-model="username">
-      <button @click="validateUser">Acceder</button>
-      <h5 v-if="error" class="error-message"> Error al iniciar sesion</h5>
+    <form @submit.prevent="validateUser" class="login-form">
+      <h3>Inicia Sesión</h3>
+      <input type="text" placeholder="Nombre de usuario" v-model="username">
+      <button type="submit">Acceder</button>
+      <h5 v-if="error" class="error-message"> Error al iniciar sesión</h5>
     </form>
-
   </div>
 </template>
 
