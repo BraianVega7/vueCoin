@@ -19,12 +19,12 @@ const mutations = {
 };
 
 const actions = {
-  async dataTransaction(savePurchase) {
+  async dataTransaction({commit},savePurchase) {
     console.log('entra aca???????')
     try {
       console.log('Datos enviados:', savePurchase);  
       const response = await apiClient.post('', savePurchase);
-      console.log('Respuesta de la API:', resp.data);
+      console.log('Respuesta de la API:', response.data);
       return response.data;
     
     } catch (error) {
