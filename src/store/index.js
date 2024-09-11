@@ -1,5 +1,7 @@
 import { createStore } from 'vuex';
 import VuexPersistence from 'vuex-persist';
+import cripto from './cripto.js'; 
+import transaccion from './transaccion.js';
 
 export default createStore({
   state: {
@@ -43,5 +45,15 @@ export default createStore({
     new VuexPersistence({
       storage: window.localStorage
     }).plugin
-  ]
+  ],
+  modules: {
+    cripto: {
+      namespaced: true,
+      ...cripto,
+    },
+    transaccion: {
+      namespaced: true,
+      ...transaccion,
+    }
+  }
 })
