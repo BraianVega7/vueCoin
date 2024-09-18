@@ -2,9 +2,8 @@
    <div class="page-container">
     <div class="menu-container">
       <router-link class="menu-item" to="/Purchase">Comprar Crypto</router-link>
-      <div class="menu-item">Venta</div>
-      <div class="menu-item">Historial de movimientos</div>
-      <div class="menu-item">Lectura, edición y borrado de las compras/ventas</div>
+      <router-link class="menu-item" to="/Sale">Vender Crypto</router-link>
+      <router-link class="menu-item" to="/History">Historial de movimientos</router-link>
       <div class="menu-item">Pantalla análisis del estado actual</div>
       <div class="menu-item">Pantalla análisis de inversiones</div>
     </div>

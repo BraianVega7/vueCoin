@@ -20,7 +20,6 @@ const mutations = {
 
 const actions = {
   async dataTransaction({commit},savePurchase) {
-    console.log('entra aca???????')
     try {
       console.log('Datos enviados:', savePurchase);  
       const response = await apiClient.post('', savePurchase);
@@ -32,6 +31,8 @@ const actions = {
       console.log('Detalles de los errores de validación:', error.response?.data?.list);
     }
   },
+
+  //hacer el llamado a la api para traer el historial del usuario logeado. 
 };
 
 export default {

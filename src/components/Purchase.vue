@@ -35,7 +35,7 @@ export default {
       cryptoCode: 'btc',
       money: 0,
       savePurchase: null,
-    };
+    };  
   },
   computed: {
     ...mapGetters('cripto', ['getCriptoPrice']),
@@ -64,6 +64,10 @@ export default {
   },
   methods: {
     ...mapActions('transaccion',['dataTransaction']),
+
+    mostrarError(){
+      //hacer metodo para mostrar los errores y pasarle todo por parametro.!!!!!
+    },
 
     guardarCompra() {
       if (this.money > 0 && this.calculatedAmount > 0) {

@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import PurchaseView from '../views/PurchaseView.vue'
 import MenuView from '../views/MenuView.vue'
 import SaleView from '../views/SaleView'
+import HistoryView from '../views/HistoryView.vue'
 import store from '../store';
 
 const routes = [
@@ -35,6 +36,12 @@ const routes = [
     name: 'SaleView',
     component: SaleView,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/History',
+    name: 'HistoryView',
+    component: HistoryView,
+    meta: {requiresAuth: true}
   },
 ]
 
