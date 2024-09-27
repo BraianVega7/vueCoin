@@ -14,31 +14,31 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/Login',
+    path: '/login',
     name: 'LoginView',
     component: LoginView,
     meta: { requiresAuth: true }
   },
   {
-    path: '/Purchase',
+    path: '/purchase',
     name: 'PurchaseView',
     component: PurchaseView,
     meta: { requiresAuth: true }
   },
   {
-    path: '/Menu',
+    path: '/menu',
     name: 'MenuView',
     component: MenuView,
     meta: { requiresAuth: true }
   },
   {
-    path: '/Sale',
+    path: '/sale',
     name: 'SaleView',
     component: SaleView,
     meta: { requiresAuth: true }
   },
   {
-    path: '/History',
+    path: '/history',
     name: 'HistoryView',
     component: HistoryView,
     meta: {requiresAuth: true}
