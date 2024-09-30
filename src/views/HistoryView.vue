@@ -16,7 +16,7 @@
           <p><strong>Pesos ARS: </strong>{{ transaction.money }}</p>
           <p><strong>Fecha: </strong>{{ transaction.datetime }}</p>
           <button class="btn btn-warning" @click="editarTransaccion(transaction)">Editar</button>
-          <button class="btn btn-danger" @click="borrarTransacccion(transaction)">Borrar</button>
+          <button class="btn btn-danger" @click="borrarTransacccion(transaction._id)">Borrar</button>
         </li>
       </ul>
     </div>
@@ -35,7 +35,7 @@ export default {
     ...mapGetters('transaccion', ['userHistory']),
   },
   methods: {
-    ...mapActions('transaccion', ['dataHistory']),
+    ...mapActions('transaccion', ['dataHistory', 'deleteTransaction']),
 
     async fetchUserHistory() {
       if (this.username) {
@@ -46,12 +46,23 @@ export default {
     },
 
     editarTransaccion(transaction){
-      console.log(transaction)
+      console.log('Editar transaccion', transaction)
     },
 
-    borrarTransacccion(transaccion){
-      console.log(transaccion)
-    }
+    async borrarTransacccion(idTransaction){
+      const confirmDelete = confirm(`¿Está seguro que desea eliminar la transacción con ID: ${idTransaction}?`);
+      if (confirmDelete) {
+        try {
+          await this.deleteTransaction(idTransaction);
+          console.log(`Transacción con ID: ${idTransaction} eliminada.`);
+          await this.fetchUserHistory();
+        } catch (error) {
+          console.error('Error al borrar la transacción:', error);
+        }
+      } else {
+        console.log('Acción de borrar cancelada.');
+      }
+    },
 
   },
   mounted() {
@@ -63,6 +74,7 @@ export default {
 <style scoped>
 .container{
   background-color: rgb(80, 96, 97);
+  padding: 20px;
 }
 
 ul {
@@ -75,14 +87,15 @@ li {
   padding: 10px; 
   background-color: #e5ddddc7;
   border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 li:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0px;
 }
 
 p {
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 button {
