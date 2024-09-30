@@ -41,7 +41,9 @@ const actions = {
     } catch (error) {
       console.error('Error al obtener historial:', error.response?.data?.list || error.message);
     }
-  }
+  },
+
+  //hacer el metodo para editar y otro para borrar.
 };
 
 export default {
