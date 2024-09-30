@@ -42,8 +42,25 @@ const actions = {
       console.error('Error al obtener historial:', error.response?.data?.list || error.message);
     }
   },
+  async deleteTransaction({ commit }, idTransaction) {
+    try {
+      console.log('Eliminando transaccion' ,idTransaction)
+      const response = await apiClient.delete(`${API_BASE_URL}/${idTransaction}`);
+      return response.data
+    } catch (error) {
+      console.error('Error al borrar el historial:', error.response?.data?.list || error.message);
+    }
+  },
 
-  //hacer el metodo para editar y otro para borrar.
+  async editTransaction({commit}, idTransaction) {
+    try {
+      console.log('Editando transaccion' ,idTransaction)
+      const response = await apiClient.patch(`${API_BASE_URL}/${idTransaction}`);
+      return response.data
+    } catch (error) {
+      console.error('Error al editar el historial:', error.response?.data?.list || error.message);
+    }
+  }
 };
 
 export default {
