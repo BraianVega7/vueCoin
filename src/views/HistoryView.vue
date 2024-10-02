@@ -9,7 +9,7 @@
       <ul>
         <li v-for="transaction in userHistory" :key="transaction._id">
           <p><strong>Id transaccion: </strong> {{ transaction._id }}</p>
-          <p><strong>Accion: </strong>{{ transaction.action }}</p>
+          <p><strong>Acción: </strong>{{ transaction.action === 'sale' ? 'Venta' : 'Compra' }}</p>
           <p><strong>Criptomoneda: </strong>{{ transaction.crypto_code }}</p>
           <p><strong>Cantidad cripto: </strong>{{ transaction.crypto_amount }} </p>
           <p><strong>Nombre Usuario: </strong>{{ transaction.user_id }}</p>
@@ -29,10 +29,10 @@
             <h5 class="modal-title">Editar Transacción - {{ selectedTransaction._id }}</h5>
           </div>
           <div class="modal-body">
-            <p>Acción actual <strong>{{ selectedTransaction.action }}</strong> modificar:
+            <p>Acción actual <strong>{{ selectedTransaction.action === 'sale' ? 'Venta' : 'Compra' }}</strong> modificar:
               <select v-model="action">
-                <option value="purchase">Compra (purchase)</option>
-                <option value="sale">Venta (sale)</option>
+                <option value="purchase">Compra</option>
+                <option value="sale">Venta</option>
               </select>
             </p>
             <p>Criptomoneda actual <strong>{{ selectedTransaction.crypto_code }}</strong> modificar:
@@ -44,7 +44,7 @@
             </p>
             <p>Valor actual Criptomoneda <strong>{{ selectedTransaction.crypto_amount }}</strong> modificar:</p>
             <input type="number" v-model="crypto_amount" min="0" step="0.01" />
-            <p>Pesos ARS actual <strong>${{ selectedTransaction.money }}</strong> modificar:</p>
+            <p>Pesos ARS actual <strong>${{ formatMoney(selectedTransaction.money) }}</strong> modificar:</p>
             <input type="number" v-model="money" min="0" step="0.01" />
           </div>
           <div class="modal-footer">
@@ -79,8 +79,8 @@ export default {
   methods: {
     ...mapActions('transaccion', ['dataHistory', 'deleteTransaction', 'updateTransaction']),
 
-    formatMoney(value) {
-      return parseFloat(value).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    formatMoney(moneyAr) {
+      return parseFloat(moneyAr).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     },
     
     async fetchUserHistory() {
@@ -110,10 +110,10 @@ export default {
       if (this.crypto_code) {
         editTransaction.crypto_code = this.crypto_code;
       }
-      if (this.crypto_amount > 0) {
+      if (this.crypto_amount > 0 || this.crypto_amount !== null) {
         editTransaction.crypto_amount = this.crypto_amount.toFixed(8);
       }
-      if (this.money > 0) {
+      if (this.money > 0 || this.crypto_amount !== null) {
         editTransaction.money = parseFloat(this.money).toFixed(2);
       }
 
