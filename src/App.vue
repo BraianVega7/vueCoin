@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import navbar from '@/components/navbar.vue'
 
 export default {

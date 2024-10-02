@@ -1,11 +1,12 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'https://labor3-d60e.restdb.io/rest/transactions';
+const API_BASE_URL = 'https://laboratorio3-5459.restdb.io/rest/transactions';
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  headers: { 'x-apikey': '64a2e9bc86d8c525a3ed8f63' },
+  headers: { 'x-apikey': '64a57c2b86d8c50fe6ed8fa5' },
 });
-
+//https://labor3-d60e.restdb.io/rest/ dejo de funcionar
+//64a2e9bc86d8c525a3ed8f63
 const state = {
   userHistory: [],
 };
@@ -18,6 +19,18 @@ const mutations = {
   setDataHistory(state, history) {
     state.userHistory = history;
   },
+  updateTransactionInHistory(state, updatedTransaction) {
+    const index = state.userHistory.findIndex(t => t._id === updatedTransaction._id);
+    if (index !== -1) {
+      state.userHistory.splice(index, 1, updatedTransaction);
+    }
+  },
+  removeTransactionFromHistory(state, idTransaction) {
+    state.userHistory = state.userHistory.filter(transaction => transaction._id !== idTransaction);
+  },
+  addTransactionToHistory(state, newTransaction) {
+    state.userHistory.push(newTransaction);
+  }
 };
 
 const actions = {
@@ -26,6 +39,7 @@ const actions = {
       console.log('Datos enviados:', savePurchase);
       const response = await apiClient.post('', savePurchase);
       console.log('Respuesta de la API:', response.data);
+      commit('addTransactionToHistory', response.data);
       return response.data;
 
     } catch (error) {
@@ -46,17 +60,19 @@ const actions = {
     try {
       console.log('Eliminando transaccion' ,idTransaction)
       const response = await apiClient.delete(`${API_BASE_URL}/${idTransaction}`);
+      commit('removeTransactionFromHistory', idTransaction);
       return response.data
     } catch (error) {
       console.error('Error al borrar el historial:', error.response?.data?.list || error.message);
     }
   },
 
-  async editTransaction({commit}, idTransaction) {
+  async updateTransaction({commit}, editTransaction) {
     try {
-      console.log('Editando transaccion' ,idTransaction)
-      const response = await apiClient.patch(`${API_BASE_URL}/${idTransaction}`);
-      return response.data
+      console.log('Editando transaccion' ,editTransaction)
+      const response = await apiClient.patch(`${API_BASE_URL}/${editTransaction._id}`,editTransaction);
+      commit('updateTransactionInHistory', response.data);
+      return response.data;
     } catch (error) {
       console.error('Error al editar el historial:', error.response?.data?.list || error.message);
     }
