@@ -1,22 +1,17 @@
 <template>
   <div class="container">
-    <div>
-      <h2>Vender Criptomoneda</h2>
-    </div>
+    <Sale></Sale>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import Sale from '@/components/Sale.vue';
 
 export default{
-  computed:{
-    /*...mapGetters('transaccion', ['userHistory']),
-    ...mapGetters(['username']),*/
-  },
-  methods:{
-    //...mapActions('transaccion', ['dataHistory']),
-  },
+  name: 'SaleView',
+  components:{
+    Sale,
+  }
 }
 
 </script>

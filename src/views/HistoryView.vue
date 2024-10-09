@@ -11,9 +11,9 @@
           <p><strong>Id transaccion: </strong> {{ transaction._id }}</p>
           <p><strong>Acción: </strong>{{ transaction.action === 'sale' ? 'Venta' : 'Compra' }}</p>
           <p><strong>Criptomoneda: </strong>{{ transaction.crypto_code }}</p>
-          <p><strong>Cantidad cripto: </strong>{{ transaction.crypto_amount }} </p>
+          <p><strong>Cantidad cripto: </strong>{{ formatCryptoAmount(transaction.crypto_amount) }} </p>
           <p><strong>Nombre Usuario: </strong>{{ transaction.user_id }}</p>
-          <p><strong>Pesos ARS: </strong>{{ formatMoney(transaction.money)   }}</p>
+          <p><strong>Pesos ARS: </strong>{{ formatMoney(transaction.money) }}</p>
           <p><strong>Fecha: </strong>{{ transaction.datetime }}</p>
           <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal"
             @click="editarTransaccion(transaction)">Editar</button>
@@ -29,7 +29,8 @@
             <h5 class="modal-title">Editar Transacción - {{ selectedTransaction._id }}</h5>
           </div>
           <div class="modal-body">
-            <p>Acción actual <strong>{{ selectedTransaction.action === 'sale' ? 'Venta' : 'Compra' }}</strong> modificar:
+            <p>Acción actual <strong>{{ selectedTransaction.action === 'sale' ? 'Venta' : 'Compra' }}</strong>
+              modificar:
               <select v-model="action">
                 <option value="purchase">Compra</option>
                 <option value="sale">Venta</option>
@@ -79,10 +80,14 @@ export default {
   methods: {
     ...mapActions('transaccion', ['dataHistory', 'deleteTransaction', 'updateTransaction']),
 
+    formatCryptoAmount(amount) {
+      return parseFloat(amount).toFixed(6);
+    },
+
     formatMoney(moneyAr) {
       return parseFloat(moneyAr).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     },
-    
+
     async fetchUserHistory() {
       if (this.username) {
         await this.dataHistory(this.username);
@@ -111,7 +116,7 @@ export default {
         editTransaction.crypto_code = this.crypto_code;
       }
       if (this.crypto_amount > 0 || this.crypto_amount !== null) {
-        editTransaction.crypto_amount = this.crypto_amount.toFixed(8);
+        editTransaction.crypto_amount = this.crypto_amount.toFixed(6);
       }
       if (this.money > 0 || this.crypto_amount !== null) {
         editTransaction.money = parseFloat(this.money).toFixed(2);

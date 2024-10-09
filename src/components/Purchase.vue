@@ -14,7 +14,7 @@
       </div>
       <div>
         <label for="money">Monto en pesos (ARS):</label>
-        <input type="number" v-model="money" min="0" placeholder="Introducir Importe" />
+        <input type="number" v-model="money" min="0" step="0.01" placeholder="Introducir Importe" />
       </div>
       <div>
         <p>Cantidad que recibirás: {{ calculatedAmount }} - {{ cryptoCode.toUpperCase() }}</p>
@@ -47,31 +47,31 @@ export default {
       return price.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     },
 
-    calculatedAmount() {
-      const criptoPrice = this.getCriptoPrice(this.cryptoCode);
-      let price = 0;
+      calculatedAmount() {
+        const criptoPrice = this.getCriptoPrice(this.cryptoCode);
+        let price = 0;
 
-      if (criptoPrice && criptoPrice.bid) {
-        price = criptoPrice.bid 
-      }
+        if (criptoPrice && criptoPrice.bid) {
+          price = criptoPrice.bid 
+        }
 
-      if (price > 0) {
-        return (this.money / price).toFixed(8);
-      } else {
-        return 0;
+        if (price > 0) {
+          return (this.money / price).toFixed(6);
+        } else {
+          return 0;
+        }
       }
-    }
   },
   methods: {
     ...mapActions('transaccion',['dataTransaction']),
-
+    ...mapActions('cripto', ['fetchCryptosPrices']),
     guardarCompra() {
       if (this.money > 0 && this.calculatedAmount > 0) {
         this.savePurchase = {
           user_id: this.username,
           action: 'purchase',
           crypto_code: this.cryptoCode,
-          crypto_amount: this.calculatedAmount,
+          crypto_amount: parseFloat(this.calculatedAmount),
           money: this.money,
           datetime: new Date(),
         }
@@ -94,6 +94,9 @@ export default {
     cryptoCode() {
       this.money = 0;
     },
+  },
+  created() {
+    this.fetchCryptosPrices();
   },
 }
 </script>
