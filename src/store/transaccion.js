@@ -44,7 +44,13 @@ const mutations = {
     console.log('wallet actualizada', state.wallet);
   },
 
-//este esta de mas
+  updateTransactionInHistory(state, updatedTransaction) {
+    const index = state.userHistory.findIndex(t => t._id === updatedTransaction._id);
+    if (index !== -1) {
+      state.userHistory.splice(index, 1, updatedTransaction);
+    }
+  },
+
   removeTransactionFromHistory(state, idTransaction) {
     state.userHistory = state.userHistory.filter(transaction => transaction._id !== idTransaction);
   },
@@ -80,23 +86,20 @@ const actions = {
   //tengo que solucionar el problema de borrar desde
   async deleteTransaction({ commit }, idTransaction) {
     try {
-      console.log('Eliminando transaccion', idTransaction)
+      console.log('Eliminando transaccion' ,idTransaction)
       const response = await apiClient.delete(`${API_BASE_URL}/${idTransaction}`);
-      const { crypto_code, crypto_amount, action } = response.data;
-      commit('updateCriptoAmount', {
-        cryptoCode: crypto_code,
-        amount: crypto_amount,
-        action: (action === 'purchase' ? 'sale' : 'purchase'),
-      });
+      commit('removeTransactionFromHistory', idTransaction);
+      return response.data
     } catch (error) {
       console.error('Error al borrar el historial:', error.response?.data?.list || error.message);
     }
   },
 
-  async updateTransaction({ _ }, editTransaction) {
+  async updateTransaction({commit}, editTransaction) {
     try {
-      console.log('Editando transaccion', editTransaction)
-      const response = await apiClient.patch(`${API_BASE_URL}/${editTransaction._id}`, editTransaction);
+      console.log('Editando transaccion' ,editTransaction)
+      const response = await apiClient.patch(`${API_BASE_URL}/${editTransaction._id}`,editTransaction);
+      commit('updateTransactionInHistory', response.data);
       return response.data;
     } catch (error) {
       console.error('Error al editar el historial:', error.response?.data?.list || error.message);

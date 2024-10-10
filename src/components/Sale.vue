@@ -102,7 +102,6 @@ export default {
     async newDataTransaction() {
       try {
         await this.dataTransaction(this.savePurchase);
-        console.log('Transacción guardada correctamente');
       } catch (error) {
         console.log('Error al realizar la transacción', error);
       }
