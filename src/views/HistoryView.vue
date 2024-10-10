@@ -17,9 +17,33 @@
           <p><strong>Fecha: </strong>{{ transaction.datetime }}</p>
           <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal"
             @click="editarTransaccion(transaction)">Editar</button>
-          <button class="btn btn-danger" @click="borrarTransaccion(transaction._id)">Borrar</button>
+          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"
+            @click="setSelectedTransaction(transaction._id)">Borrar</button>
         </li>
       </ul>
+    </div>
+
+    <div class="modal" id="confirmDelete">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Eliminar transacción</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <h6>Confirme que está seguro de eliminar esta transacción.</h6>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button @click="borrarTransaccion(selectedTransaction._id)" data-bs-dismiss="modal"
+              class="btn btn-danger">Eliminar</button>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <div class="modal fade" tabindex="-1" id="editModal">
@@ -80,6 +104,10 @@ export default {
   methods: {
     ...mapActions('transaccion', ['dataHistory', 'deleteTransaction', 'updateTransaction']),
 
+    setSelectedTransaction(id) {
+      this.selectedTransaction._id = id;
+    },
+
     formatCryptoAmount(amount) {
       return parseFloat(amount).toFixed(6);
     },
@@ -132,17 +160,16 @@ export default {
     },
 
     async borrarTransaccion(idTransaction) {
-      const confirmDelete = confirm(`¿Está seguro que desea eliminar la transacción con ID: ${idTransaction}?`);
-      if (confirmDelete) {
-        try {
-          await this.deleteTransaction(idTransaction);
-          console.log(`Transacción con ID: ${idTransaction} eliminada.`);
-          await this.fetchUserHistory();
-        } catch (error) {
-          console.error('Error al borrar la transacción:', error);
-        }
-      } else {
-        console.log('Acción de borrar cancelada.');
+      if (!idTransaction) {
+        console.error('ID de transacción no encontrado');
+        return;
+      }
+      try {
+        await this.deleteTransaction(idTransaction);
+        console.log(`Transacción con ID: ${idTransaction} eliminada.`);
+        await this.fetchUserHistory();
+      } catch (error) {
+        console.error('Error al borrar la transacción:', error);
       }
     },
 

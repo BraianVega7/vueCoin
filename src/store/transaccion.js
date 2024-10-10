@@ -1,12 +1,14 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'https://laboratorio-36cf.restdb.io/rest/transactions';
+const API_BASE_URL = 'https://labor3-d60e.restdb.io/rest/transactions';
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  headers: { 'x-apikey': '64a5ccf686d8c5d256ed8fce' },
+  headers: { 'x-apikey': '64a2e9bc86d8c525a3ed8f63' },
 });
-//https://labor3-d60e.restdb.io/rest/ - https://laboratorio3-5459.restdb.io/rest/
-//64a2e9bc86d8c525a3ed8f63 - 64a57c2b86d8c50fe6ed8fa5
+//https://labor3-d60e.restdb.io/rest/ - https://laboratorio3-5459.restdb.io/rest/ - https://laboratorio-36cf.restdb.io/rest/
+//https://laboratorio3-f36a.restdb.io/rest/
+//64a2e9bc86d8c525a3ed8f63 - 64a57c2b86d8c50fe6ed8fa5 - 64a5ccf686d8c5d256ed8fce
+//64bdbb6f86d8c5e18ded91e3
 const state = {
   wallet: {},
   userHistory: [],
@@ -75,6 +77,7 @@ const actions = {
       console.error('Error al obtener historial:', error.response?.data?.list || error.message);
     }
   },
+  //tengo que solucionar el problema de borrar desde
   async deleteTransaction({ commit }, idTransaction) {
     try {
       console.log('Eliminando transaccion', idTransaction)
