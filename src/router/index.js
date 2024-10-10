@@ -5,6 +5,7 @@ import PurchaseView from '../views/PurchaseView.vue'
 import MenuView from '../views/MenuView.vue'
 import SaleView from '../views/SaleView'
 import HistoryView from '../views/HistoryView.vue'
+import AnalisisView from '@/views/AnalisisView.vue'
 import store from '../store';
 
 const routes = [
@@ -41,6 +42,12 @@ const routes = [
     path: '/history',
     name: 'HistoryView',
     component: HistoryView,
+    meta: {requiresAuth: true}
+  },
+  {
+    path: '/analisis',
+    name: 'AnalisisView',
+    component: AnalisisView,
     meta: {requiresAuth: true}
   },
 ]

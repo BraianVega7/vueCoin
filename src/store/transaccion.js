@@ -83,7 +83,7 @@ const actions = {
       console.error('Error al obtener historial:', error.response?.data?.list || error.message);
     }
   },
-  //tengo que solucionar el problema de borrar desde
+
   async deleteTransaction({ commit }, idTransaction) {
     try {
       console.log('Eliminando transaccion' ,idTransaction)

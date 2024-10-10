@@ -1,10 +1,10 @@
 <template>
    <div class="page-container">
     <div class="menu-container">
-      <router-link class="menu-item" to="/Purchase">Comprar Crypto</router-link>
-      <router-link class="menu-item" to="/Sale">Vender Crypto</router-link>
-      <router-link class="menu-item" to="/History">Historial de movimientos</router-link>
-      <div class="menu-item">Pantalla análisis del estado actual</div>
+      <router-link class="menu-item" to="/purchase">Comprar Crypto</router-link>
+      <router-link class="menu-item" to="/sale">Vender Crypto</router-link>
+      <router-link class="menu-item" to="/history">Historial de movimientos</router-link>
+      <router-link class="menu-item" to="/analisis">Pantalla análisis del estado actual</router-link>
       <div class="menu-item">Pantalla análisis de inversiones</div>
     </div>
   </div>

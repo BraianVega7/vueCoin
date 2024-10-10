@@ -166,7 +166,7 @@ export default {
       }
       try {
         await this.deleteTransaction(idTransaction);
-        console.log(`Transacción con ID: ${idTransaction} eliminada.`);
+        console.log('Transacción con ID eliminada', idTransaction)
         await this.fetchUserHistory();
       } catch (error) {
         console.error('Error al borrar la transacción:', error);
