@@ -144,9 +144,10 @@ export default {
         editTransaction.crypto_code = this.crypto_code;
       }
       if (this.crypto_amount > 0 || this.crypto_amount !== null) {
-        editTransaction.crypto_amount = this.crypto_amount.toFixed(6);
+        editTransaction.crypto_amount = parseFloat(this.crypto_amount).toFixed(6);
+        console.log(this.crypto_amount)
       }
-      if (this.money > 0 || this.crypto_amount !== null) {
+      if (this.money > 0) {
         editTransaction.money = parseFloat(this.money).toFixed(2);
       }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Vender Criptomonedas</h1>
-    <div v-if=" getWallet && availableCryptos().length===0">
+    <div v-if="getWallet && availableCryptos().length === 0">
       <h5>No hay Criptomonedas para vender.</h5>
     </div>
     <div v-else>
@@ -13,19 +13,21 @@
           </option>
         </select>
         <div>
-          <p>Cantidad disponible:  {{ availableAmount.toFixed(6) }}</p>
+          <p>Cantidad disponible: {{ availableAmount.toFixed(6) }}</p>
         </div>
         <div>
           <p>Precio actual de mercado venta: $ {{ formattedCriptoPrice }}</p>
         </div>
         <div>
           <label for="amountToSell">Monto en Cripto:</label>
-          <input type="number" v-model.number="amountToSell"  min="0" step="0.000001" :max="availableAmount" placeholder="Ingresa cantidad">
+          <input type="number" v-model.number="amountToSell" min="0" step="0.000001" :max="availableAmount"
+            placeholder="Ingresa cantidad">
         </div>
         <div>
           <p>Recibirás en ARS: $ {{ calculatedAmountInARS.toLocaleString('es-AR', {
             minimumFractionDigits: 2,
-            maximumFractionDigits: 2 }) }}</p>
+            maximumFractionDigits: 2
+          }) }}</p>
         </div>
         <div>
           <button type="submit">Vender</button>
@@ -75,7 +77,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('transaccion', ['dataTransaction']),
+    ...mapActions('transaccion', ['dataHistory', 'dataTransaction']),
     ...mapActions('cripto', ['fetchCryptosPrices']),
 
     availableCryptos() {
@@ -106,10 +108,19 @@ export default {
         console.log('Error al realizar la transacción', error);
       }
     },
+
+    async loadUserHistory() {
+      try {
+        await this.dataHistory(this.username);
+      } catch (error) {
+        console.error('Error al cargar el historial de usuario:', error);
+      }
+    },
   },
 
   created() {
     this.fetchCryptosPrices();
+    this.loadUserHistory();
   },
 };
 </script>

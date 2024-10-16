@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'https://labor3-d60e.restdb.io/rest/transactions';
+const API_BASE_URL = 'https://laboratorio-afe2.restdb.io/rest/transactions';
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  headers: { 'x-apikey': '64a2e9bc86d8c525a3ed8f63' },
+  headers: { 'x-apikey': '650b53356888544ec60c00bf' },
 });
 //https://labor3-d60e.restdb.io/rest/ - https://laboratorio3-5459.restdb.io/rest/ - https://laboratorio-36cf.restdb.io/rest/
 //https://laboratorio3-f36a.restdb.io/rest/
@@ -84,21 +84,72 @@ const actions = {
     }
   },
 
-  async deleteTransaction({ commit }, idTransaction) {
+  async deleteTransaction({ commit, state }, idTransaction) {
     try {
-      console.log('Eliminando transaccion' ,idTransaction)
+      console.log('Eliminando transacción', idTransaction);
+      const transactionToDelete = state.userHistory.find(transaction => transaction._id === idTransaction);
+
+      if (transactionToDelete) {
+        const { crypto_code, crypto_amount, action } = transactionToDelete;
+        if (action === 'purchase') {
+          commit('updateCriptoAmount', {
+            criptoCode: crypto_code,
+            amount: crypto_amount,
+            action: 'sale',
+          });
+        } else if (action === 'sale') {
+          commit('updateCriptoAmount', {
+            criptoCode: crypto_code,
+            amount: crypto_amount,
+            action: 'purchase',
+        });
+        }
+      }
       const response = await apiClient.delete(`${API_BASE_URL}/${idTransaction}`);
       commit('removeTransactionFromHistory', idTransaction);
-      return response.data
+      return response.data;
     } catch (error) {
       console.error('Error al borrar el historial:', error.response?.data?.list || error.message);
     }
   },
 
-  async updateTransaction({commit}, editTransaction) {
+  async updateTransaction({ commit, state }, editTransaction) {
     try {
-      console.log('Editando transaccion' ,editTransaction)
-      const response = await apiClient.patch(`${API_BASE_URL}/${editTransaction._id}`,editTransaction);
+      console.log('Editando transacción', editTransaction);
+      const originalTransaction = state.userHistory.find(transaction => transaction._id === editTransaction._id);
+      if (originalTransaction) {
+        const {
+          crypto_code: originalCryptoCode,
+          crypto_amount: originalCryptoAmount,
+          action: originalAction
+        } = originalTransaction;
+
+        if (originalAction === 'purchase') {
+          if (editTransaction.action === 'sale') {
+            commit('updateCriptoAmount', {
+              criptoCode: originalCryptoCode,
+              amount: originalCryptoAmount,
+              action: 'sale',
+            });
+          }
+        } else if (originalAction === 'sale') {
+          if (editTransaction.action === 'purchase') {
+            commit('updateCriptoAmount', {
+              criptoCode: originalCryptoCode,
+              amount: originalCryptoAmount,
+              action: 'purchase',
+            });
+          }
+        }
+        if (editTransaction.crypto_code !== originalCryptoCode) {
+          commit('updateCriptoAmount', {
+            criptoCode: editTransaction.crypto_code,
+            amount: parseFloat(editTransaction.crypto_amount),
+            action: 'purchase'
+          });
+        }
+      }
+      const response = await apiClient.patch(`${API_BASE_URL}/${editTransaction._id}`, editTransaction);
       commit('updateTransactionInHistory', response.data);
       return response.data;
     } catch (error) {
