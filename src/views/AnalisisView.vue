@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <table>
+    <div v-if="Object.keys(filterW).length === 0">
+      <h1>No hay transacciones para analizar</h1>
+    </div>
+    <div v-else>
+      <table>
       <thead>
         <tr>
           <th>Criptomoneda</th>
@@ -24,6 +28,7 @@
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           }) }} </h4>
+    </div>
     </div>
   </div>
 </template>
