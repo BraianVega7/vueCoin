@@ -20,6 +20,9 @@ const getters = {
 };
 
 const mutations = {
+  setWallet(state, wallet) {
+    state.wallet = wallet;
+  },
   setDataHistory(state, history) {
     state.userHistory = history;
   },
@@ -56,6 +59,21 @@ const mutations = {
   },
 };
 
+function calculateWallet(history) {
+  const wallet = {};
+  history.forEach(transaction => {
+    const { crypto_code, crypto_amount, action } = transaction;
+    const amount = parseFloat(crypto_amount);
+
+    if (!wallet[crypto_code]) {
+      wallet[crypto_code] = 0;
+    }
+
+    wallet[crypto_code] += (action === 'purchase') ? amount : -amount;
+  });
+  return wallet;
+}
+
 const actions = {
   async dataTransaction({ commit }, savePurchase) {
     try {
@@ -79,6 +97,7 @@ const actions = {
     try {
       const response = await apiClient.get(`${API_BASE_URL}?q={"user_id":"${username}"}`);
       commit('setDataHistory', response.data);
+      commit('setWallet', calculateWallet(response.data));
     } catch (error) {
       console.error('Error al obtener historial:', error.response?.data?.list || error.message);
     }

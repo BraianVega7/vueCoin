@@ -4,7 +4,7 @@
       <router-link class="menu-item" to="/purchase">Comprar Crypto</router-link>
       <router-link class="menu-item" to="/sale">Vender Crypto</router-link>
       <router-link class="menu-item" to="/history">Historial de movimientos</router-link>
-      <router-link class="menu-item" to="/analisis">Pantalla análisis del estado actual</router-link>
+      <router-link class="menu-item" to="/analisis">Análisis del estado actual</router-link>
       <div class="menu-item">Pantalla análisis de inversiones</div>
     </div>
   </div>
