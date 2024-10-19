@@ -5,30 +5,30 @@
     </div>
     <div v-else>
       <table>
-      <thead>
-        <tr>
-          <th>Criptomoneda</th>
-          <th>Cantidad</th>
-          <th>Dinero</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(amount, criptoCode) in filterW" :key="criptoCode">
-          <td>{{ criptoCode.toUpperCase() }}</td>
-          <td>{{ amount.toFixed(8) }}</td>
-          <td>{{ calcularValor(criptoCode, amount).toLocaleString('es-AR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }) }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="total-container">
-      <h4>Dinero Total: {{ total.toLocaleString('es-AR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }) }} </h4>
-    </div>
+        <thead>
+          <tr>
+            <th>Criptomoneda</th>
+            <th>Cantidad</th>
+            <th>Dinero</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(amount, criptoCode) in filterW" :key="criptoCode">
+            <td>{{ criptoCode.toUpperCase() }}</td>
+            <td>{{ amount.toFixed(8) }}</td>
+            <td>{{ calcularValor(criptoCode, amount).toLocaleString('es-AR', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="total-container">
+        <h4>Dinero Total: {{ total.toLocaleString('es-AR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }) }} </h4>
+      </div>
     </div>
   </div>
 </template>
