@@ -11,8 +11,11 @@
         </thead>
         <tbody>
           <tr v-for="(res, cripto) in walletData" :key="cripto">
-            <td>{{ cripto }}</td>
-            <td>{{ formatCurrency(res.resultado) }}</td>
+            <td><strong>{{ cripto.toUpperCase() }}</strong></td>
+            <td :class="{'positivo': res.resultado > 0, 'negativo': res.resultado < 0}">
+              {{ res.resultado > 0 ? '+' : res.resultado < 0 ? '-' : '' }}
+              {{ formatCurrency(Math.abs(res.resultado)) }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -64,7 +67,7 @@ export default {
 
       for (const crypto_code in wallet) {
         if (wallet[crypto_code].ganado === 0) {
-          const currentPrice = this.getCriptoPrice(crypto_code)?.totalBid || 0;
+          const currentPrice = this.getCriptoPrice(crypto_code)?.totalAsk || 0;
           const valorActual = wallet[crypto_code].amount * currentPrice;
           const totalPerdida = wallet[crypto_code].perdida;
           wallet[crypto_code].resultado = valorActual - totalPerdida;
@@ -96,5 +99,15 @@ td {
   padding: 10px;
   border: 1px solid #ccc;
   text-align: center;
+}
+
+.positivo {
+  color: green;
+  font-weight: bold;
+}
+
+.negativo {
+  color: red;
+  font-weight: bold;
 }
 </style>

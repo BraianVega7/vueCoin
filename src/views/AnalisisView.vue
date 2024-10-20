@@ -16,18 +16,12 @@
           <tr v-for="(amount, criptoCode) in filterW" :key="criptoCode">
             <td>{{ criptoCode.toUpperCase() }}</td>
             <td>{{ amount.toFixed(8) }}</td>
-            <td>{{ calcularValor(criptoCode, amount).toLocaleString('es-AR', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            }) }}</td>
+            <td>{{ formatCurrency(calcularValor(criptoCode, amount))}}</td>
           </tr>
         </tbody>
       </table>
       <div class="total-container">
-        <h4>Dinero Total: {{ total.toLocaleString('es-AR', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }) }} </h4>
+        <h4>Dinero Total: {{ formatCurrency(total)}} </h4>
       </div>
     </div>
   </div>
@@ -65,6 +59,11 @@ export default {
     },
   },
   methods: {
+
+    formatCurrency(value) {
+      return value.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    },
+
     calcularValor(criptoCode, amount) {
       const priceData = this.getCriptoPrice(criptoCode);
       if (priceData.totalAsk) {
