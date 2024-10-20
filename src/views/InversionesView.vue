@@ -27,10 +27,10 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  data(){
-    return{
-      walletData:{},
-    }
+  data() {
+    return {
+      walletData: {},
+    };
   },
 
   computed: {
@@ -41,7 +41,7 @@ export default {
 
   methods: {
     ...mapActions('transaccion', ['dataHistory']),
-    
+
     async calculateInvestmentResults() {
       await this.dataHistory(this.username);
       const userHistory = this.userHistory;
@@ -49,10 +49,10 @@ export default {
       const wallet = {};
       
       userHistory.forEach(transaction => {
-        const { crypto_code,crypto_amount, action, money } = transaction;
-        const amount = parseFloat(crypto_amount)
+        const { crypto_code, crypto_amount, action, money } = transaction;
+        const amount = parseFloat(crypto_amount);
         if (!wallet[crypto_code]) {
-          wallet[crypto_code] = {amount: 0, perdida: 0, ganado: 0 };
+          wallet[crypto_code] = { amount: 0, perdida: 0, ganado: 0 };
         }
 
         if (action === 'purchase') {
@@ -62,7 +62,6 @@ export default {
           wallet[crypto_code].amount -= amount;
           wallet[crypto_code].ganado += parseFloat(money);
         }
-
       });
 
       for (const crypto_code in wallet) {
@@ -77,6 +76,7 @@ export default {
       }
       this.walletData = wallet;
     },
+
     formatCurrency(value) {
       return value.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     },
@@ -89,16 +89,35 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
 table {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
+  margin: 20px 0;
 }
 
 th,
 td {
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  border: 1px solid #ddd;
   text-align: center;
+  font-size: 1.1rem;
+}
+
+th {
+  background-color: #f4f4f4;
+  color: #555;
 }
 
 .positivo {
@@ -109,5 +128,9 @@ td {
 .negativo {
   color: red;
   font-weight: bold;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
 }
 </style>

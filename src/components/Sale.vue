@@ -1,36 +1,33 @@
 <template>
-  <div class="container">
+  <div class="sell-container">
     <h1>Vender Criptomonedas</h1>
     <div v-if="getWallet && availableCryptos().length === 0">
       <h5>No hay Criptomonedas para vender.</h5>
     </div>
     <div v-else>
-      <form @submit.prevent="createSellTransaction">
+      <form @submit.prevent="createSellTransaction" class="sell-form">
         <label for="cryptoCode">Criptomoneda disponible:</label>
-        <select v-model="cryptoCode">
+        <select v-model="cryptoCode" class="crypto-select">
           <option v-for="crypto in availableCryptos()" :key="crypto" :value="crypto">
             {{ crypto }}
           </option>
         </select>
-        <div>
-          <p>Cantidad disponible: {{ availableAmount.toFixed(6) }}</p>
+        <div class="available-amount">
+          <p>Cantidad disponible: <span class="amount">{{ availableAmount.toFixed(6) }}</span></p>
         </div>
-        <div>
-          <p>Precio actual de mercado venta: $ {{ formattedCriptoPrice }}</p>
+        <div class="price-info">
+          <p>Precio actual de mercado venta: <span class="price">${{ formattedCriptoPrice }}</span></p>
         </div>
         <div>
           <label for="amountToSell">Monto en Cripto:</label>
           <input type="number" v-model.number="amountToSell" min="0" step="0.000001" :max="availableAmount"
-            placeholder="Ingresa cantidad">
+            placeholder="Ingresa cantidad" class="amount-input">
+        </div>
+        <div class="calculated-amount">
+          <p>Recibirás en ARS: <span class="ars-amount">${{ calculatedAmountInARS.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</span></p>
         </div>
         <div>
-          <p>Recibirás en ARS: $ {{ calculatedAmountInARS.toLocaleString('es-AR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }) }}</p>
-        </div>
-        <div>
-          <button type="submit">Vender</button>
+          <button type="submit" class="submit-button">Vender</button>
         </div>
       </form>
     </div>
@@ -126,7 +123,68 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.sell-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: rgb(91, 103, 91);
+}
+
+.sell-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  color: rgb(91, 103, 91);
+}
+
+.crypto-select, .amount-input {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.available-amount, .price-info, .calculated-amount {
+  margin-top: 15px;
+}
+
+.amount {
+  font-weight: bold;
+  color: rgb(91, 103, 91);
+}
+
+.price {
+  font-weight: bold;
+  color: rgb(91, 103, 91);
+}
+
+.ars-amount {
+  font-weight: bold;
+  color: green;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 10px;
   background-color: rgb(91, 103, 91);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #5a7a5a;
 }
 </style>

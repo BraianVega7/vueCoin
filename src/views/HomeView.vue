@@ -1,25 +1,25 @@
 <template>
   <div class="container">
     <Login/>
-    <!--aca viene la parte de las monedas con sus valores e imagenes-->
-    <!--tambien aca se podria hacer un footer-->
   </div>
 </template>
 
 <script>
 import Login from '../components/Login.vue'
 
-export default{
+export default {
   name: 'HomeView',
-  components:{
+  components: {
     Login,
   }
 }
 </script>
 
 <style scoped>
-.container{
+.container {
   display: flex;
-  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>

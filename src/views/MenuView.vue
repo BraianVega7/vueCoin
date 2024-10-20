@@ -16,32 +16,41 @@
 
 <style scoped>
 .page-container {
-  background-color: #333; 
-  height: 100vh; 
+  background-color: #333;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu-container {
-  padding: 20px; 
-  border-radius: 5px; 
-  width: 300px; 
-  margin: 0 auto; 
-  color: white; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  top: -50px;
 }
 
 .menu-item {
-  padding: 10px 0;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  display: block;
+  font-size: 1.5rem;
+  color: white;
+  padding: 15px 0;
+  margin: 10px 0;
+  border: 2px solid transparent;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .menu-item:hover {
   background-color: #555;
+  border-color: #777;
 }
 
 .router-link-active {
   font-weight: bold;
+  background-color: #444;
+  border-color: #999;
 }
 </style>

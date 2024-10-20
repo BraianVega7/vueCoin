@@ -31,7 +31,6 @@
 import { mapGetters } from 'vuex';
 
 export default {
-
   computed: {
     ...mapGetters('transaccion', ['getWallet']),
     ...mapGetters('cripto', ['getCriptoPrice']),
@@ -58,8 +57,8 @@ export default {
       return sumTotal;
     },
   },
+  
   methods: {
-
     formatCurrency(value) {
       return value.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     },
@@ -71,28 +70,49 @@ export default {
       }
     }
   },
+
   mounted() {
     this.$store.dispatch('cripto/fetchCryptosPrices');
   }
 }
-
 </script>
 
 <style scoped>
 .container {
-  background-color: rgba(54, 60, 52, 0.625);
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
 }
 
 table {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
+  margin: 20px 0;
 }
 
 th,
 td {
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  border: 1px solid #ddd;
   text-align: center;
+  font-size: 1.1rem;
+}
+
+th {
+  background-color: #f4f4f4;
+  color: #555;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
 }
 
 .total-container {
