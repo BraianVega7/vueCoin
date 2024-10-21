@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <h1>Inversiones</h1>
-    <div>
+    <div v-if="Object.keys(walletData).length === 0">
+      <h3>No hay inversiones.</h3>
+    </div>
+    <div v-else>
       <table>
         <thead>
           <tr>
